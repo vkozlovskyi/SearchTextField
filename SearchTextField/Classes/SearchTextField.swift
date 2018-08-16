@@ -137,7 +137,7 @@ open class SearchTextField: UITextField {
     open var resultsListHeader: UIView?
 
     /// Set activity indicator
-    var indicator: SearchActivityIndicator? = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    open var indicator: SearchActivityIndicator? = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
     // Move the table around to customize for your layout
     open var tableXOffset: CGFloat = 0.0
