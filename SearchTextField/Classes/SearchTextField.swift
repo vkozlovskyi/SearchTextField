@@ -15,6 +15,8 @@ public protocol ActivityIndicatorProtocol {
 
 public typealias SearchActivityIndicator = ActivityIndicatorProtocol & UIView
 
+extension UIActivityIndicatorView: ActivityIndicatorProtocol { }
+
 open class SearchTextField: UITextField {
     
     ////////////////////////////////////////////////////////////////////////
@@ -135,7 +137,7 @@ open class SearchTextField: UITextField {
     open var resultsListHeader: UIView?
 
     /// Set activity indicator
-    var indicator: SearchActivityIndicator?
+    var indicator: SearchActivityIndicator? = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
     // Move the table around to customize for your layout
     open var tableXOffset: CGFloat = 0.0
