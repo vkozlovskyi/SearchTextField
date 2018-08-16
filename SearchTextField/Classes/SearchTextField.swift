@@ -8,6 +8,13 @@
 
 import UIKit
 
+public protocol ActivityIndicatorProtocol {
+  func startAnimating()
+  func stopAnimating()
+}
+
+public typealias SearchActivityIndicator = ActivityIndicatorProtocol & UIView
+
 open class SearchTextField: UITextField {
     
     ////////////////////////////////////////////////////////////////////////
@@ -84,19 +91,19 @@ open class SearchTextField: UITextField {
     /// Set your custom set of attributes in order to highlight the string found in each item
     open var highlightAttributes: [NSAttributedStringKey: AnyObject] = [.font: UIFont.boldSystemFont(ofSize: 10)]
     
-    /// Start showing the default loading indicator, useful for searches that take some time.
+    /// Start showing the loading indicator, useful for searches that take some time.
     open func showLoadingIndicator() {
         self.rightViewMode = .always
-        indicator.startAnimating()
+        indicator?.startAnimating()
     }
     
     /// Force the results list to adapt to RTL languages
     open var forceRightToLeft = false
     
-    /// Hide the default loading indicator
+    /// Hide the loading indicator
     open func stopLoadingIndicator() {
         self.rightViewMode = .never
-        indicator.stopAnimating()
+        indicator?.stopAnimating()
     }
     
     /// When InlineMode is true, the suggestions appear in the same line than the entered string. It's useful for email domains suggestion for example.
@@ -127,6 +134,9 @@ open class SearchTextField: UITextField {
     /// Set the results list's header
     open var resultsListHeader: UIView?
 
+    /// Set activity indicator
+    var indicator: SearchActivityIndicator?
+
     // Move the table around to customize for your layout
     open var tableXOffset: CGFloat = 0.0
     open var tableYOffset: CGFloat = 0.0
@@ -144,7 +154,6 @@ open class SearchTextField: UITextField {
     fileprivate var timer: Timer? = nil
     fileprivate var placeholderLabel: UILabel?
     fileprivate static let cellIdentifier = "APSearchTextFieldCell"
-    fileprivate let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     fileprivate var maxTableViewSize: CGFloat = 0
     
     fileprivate var filteredResults = [SearchTextFieldItem]()
@@ -193,7 +202,6 @@ open class SearchTextField: UITextField {
         }
         
         // Create the loading indicator
-        indicator.hidesWhenStopped = true
         self.rightView = indicator
     }
     
